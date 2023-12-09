@@ -12,12 +12,13 @@ const DailyWeatherRow = ({
   weather,
   showNumberOfDays,
   draggable,
+  onClickLocation,
   onDelete,
   onDrag,
 }: DailyWeatherRowProps) => (
   <Draggable draggable={draggable} onDrag={onDrag}>
     <div className={style.dailyWeatherRow}>
-      <span className={style.locationName}>{location.name}</span>
+      <span onClick={() => onClickLocation(location)} className={style.locationName}>{location.name}</span>
       <div className={clsx(style.dayContainer, style.item)}>
         {weather.daily?.slice(0, showNumberOfDays).map((day) => (
           <div key={day.time} className={style.day}>
@@ -38,6 +39,7 @@ type DailyWeatherRowProps = {
   weather: Weather;
   location: Location;
   draggable: boolean;
+  onClickLocation: (location: Location) => void;
   onDelete: (locationId: number) => void;
   onDrag: (source: number, target: number) => void;
 };

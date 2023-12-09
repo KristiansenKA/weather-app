@@ -16,7 +16,7 @@ const DashBoard = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [locations, setLocations] = useState<Location[]>();
   const [showNumberOfDays, setShowNumberOfDays] = useState(4);
   const { data: locationsInLocalStorage, setData: setLocalStorageData } =
     useLocalStorage<Location[]>("locations");
@@ -25,7 +25,7 @@ const DashBoard = () => {
   const handleOnGetLocations = async (searchValue: string) => {
     setLoading(true);
     const locations = await getLocations(searchValue);
-    locations.results && setLocations(locations.results);
+    setLocations(locations.results ?? []);
     setLoading(false);
   };
 
@@ -40,13 +40,16 @@ const DashBoard = () => {
     [locations]
   );
 
-  const handleOnClickLocation = (location: Location) => {
-    const locationInLocalStorage = locationsInLocalStorage?.find(
-      (locationInLocalStorage) => locationInLocalStorage.id === location.id
-    );
-    if (!locationInLocalStorage) {
-      setLocalStorageData([...(locationsInLocalStorage ?? []), location]);
+  const handleOnClickLocation = (location: Location, addToStorage = true) => {
+    if (addToStorage) {
+      const locationInLocalStorage = locationsInLocalStorage?.find(
+        (locationInLocalStorage) => locationInLocalStorage.id === location.id
+      );
+      if (!locationInLocalStorage) {
+        setLocalStorageData([...(locationsInLocalStorage ?? []), location]);
+      }
     }
+
     const queryParams = new URLSearchParams({
       name: location.name,
       latitude: location.latitude.toString(),
@@ -69,7 +72,7 @@ const DashBoard = () => {
     newLocations && setLocalStorageData(newLocations);
   };
 
-  const openList = (locations.length > 0 || loading) && searchValue.length > 0;
+  const openList = loading || searchValue.length > 0;
 
   return (
     <div className={style.dashboardContainer}>
@@ -81,9 +84,13 @@ const DashBoard = () => {
         openList={openList}
       />
       {openList && (
-        <List parentElement={searchRef}>
+        <List
+          parentElement={searchRef}
+          loading={loading}
+          noItemsFound={locations?.length === 0}
+        >
           <LocationListItems
-            locations={locations}
+            locations={locations ?? []}
             onClickLocation={handleOnClickLocation}
           />
         </List>
@@ -102,6 +109,7 @@ const DashBoard = () => {
           <DailyWeatherTable
             locations={locationsInLocalStorage}
             showNumberOfDays={showNumberOfDays}
+            onClickLocation={(location) => handleOnClickLocation(location, false)}
             onDrag={handleOnDrag}
             onDelete={handleOnDelete}
           />

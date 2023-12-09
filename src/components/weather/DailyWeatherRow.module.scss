@@ -1,9 +1,11 @@
+@import "../../styles/variables.scss";
+
 .dailyWeatherRow {
   display: grid;
   grid-template-columns: 1fr 45% 2rem;
   grid-template-areas: "location days actions";
   column-gap: 0.5rem;
-  border-bottom: 1px solid #c3d0d8;
+  border-bottom: $default-border;
   padding: 0.5rem 1rem;
 
   .item {
@@ -15,6 +17,10 @@
 
   .locationName {
     grid-area: location;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 
   .dayContainer {

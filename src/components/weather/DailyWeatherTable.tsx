@@ -9,6 +9,7 @@ import { getWeekDayByIsoString } from "@/domain/weather";
 const DailyWeatherTable = ({
   locations,
   showNumberOfDays,
+  onClickLocation,
   onDelete,
   onDrag,
 }: DailyWeatherTableProps) => {
@@ -48,6 +49,7 @@ const DailyWeatherTable = ({
                   weather={weather}
                   showNumberOfDays={showNumberOfDays}
                   draggable={locations.length > 1}
+                  onClickLocation={onClickLocation}
                   onDelete={onDelete}
                   onDrag={onDrag}
                 />
@@ -63,6 +65,7 @@ const DailyWeatherTable = ({
 type DailyWeatherTableProps = {
   locations: Location[];
   showNumberOfDays: number;
+  onClickLocation: (location: Location) => void;
   onDelete: (locationId: number) => void;
   onDrag: (source: number, target: number) => void;
 };

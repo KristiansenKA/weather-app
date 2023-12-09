@@ -9,4 +9,10 @@
   padding: 0.5rem 0;
   background-color: #fff;
   position: absolute;
+  min-height: 3rem;
+
+  .noItemsFound {
+    width: 100%;
+    text-align: center;
+  }
 }

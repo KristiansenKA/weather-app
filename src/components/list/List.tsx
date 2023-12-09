@@ -10,7 +10,7 @@ import {
 import style from "./List.module.scss";
 import Spinner from "@/components/loading/Spinner";
 
-const List = <T,>({ loading, children, parentElement }: ListProps<T>) => {
+const List = <T,>({ children, noItemsFound, loading, parentElement }: ListProps<T>) => {
   const { current } = parentElement;
   const [position, setPosition] = useState<
     Pick<DOMRect, "top" | "left" | "width" | "height"> | undefined
@@ -56,12 +56,14 @@ const List = <T,>({ loading, children, parentElement }: ListProps<T>) => {
       className={style.list}
     >
       {loading ? <Spinner /> : children}
+      {noItemsFound && !loading && <span className={style.noItemsFound}>No items found</span>}
     </div>
   );
 };
 
 type ListProps<T> = {
   loading?: boolean;
+  noItemsFound: boolean;
   children: ReactElement<ListItemProps<T>>;
   parentElement: MutableRefObject<HTMLElement | null>;
 };
