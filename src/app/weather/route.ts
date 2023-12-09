@@ -1,25 +1,41 @@
-import { WeatherRequest } from "@/types/weather";
+import { NextRequest } from "next/server";
 
-const DEFAULT_VARIABLES = "temperature_2m,weather_code"
+const DEFAULT_HOURLY_VARIABLES = "temperature_2m,weather_code,wind_speed_10m,rain";
+const DEFAULT_DAILY_VARIABLES = "temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,rain_sum";
 
-export async function GET(request: WeatherRequest) {
+export async function GET(request: NextRequest) {
+  const latitude = request.nextUrl.searchParams.get("latitude");
+  const longitude = request.nextUrl.searchParams.get("longitude");
+  const forecastDays = request.nextUrl.searchParams.get("forecast_days");
+  const hourly = request.nextUrl.searchParams.get("hourly");
+  const daily = request.nextUrl.searchParams.get("daily");
+
+  if (!latitude || !longitude) {
+    return Response.json(
+      {
+        error: "Missing latitude or longitude query parameter",
+      },
+      { status: 400 }
+    );
+  }
+
   const urlSearchParams = new URLSearchParams({
-    latitude: request.latitude.toString(),
-    longitude: request.longitude.toString(),
-    forecast_days: request.foreCastLengthInDays.toString(),
+    latitude,
+    longitude,
+    forecast_days: forecastDays || '1',
   });
 
-  if (request.hourly) {
-    urlSearchParams.append("hourly", DEFAULT_VARIABLES);
+  if (hourly === 'true') {
+    urlSearchParams.append("hourly", DEFAULT_HOURLY_VARIABLES);
   }
 
-  if (request.daily) {
-    urlSearchParams.append("daily", DEFAULT_VARIABLES);
+  if (daily === 'true') {
+    urlSearchParams.append("daily", DEFAULT_DAILY_VARIABLES);
   }
 
-  const res = await fetch("https://api.open-meteo.com/v1/forecast" + urlSearchParams);
+  const res = await fetch("https://api.open-meteo.com/v1/forecast?" + urlSearchParams);
 
   const data = await res.json();
 
-  return Response.json(data);
+  return Response.json(Array.isArray(data) ? data : [data]);
 }

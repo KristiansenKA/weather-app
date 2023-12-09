@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 1rem 10rem;
+  @media screen and (max-width: 800px) {
+    margin: 1rem;
+  }
+}

@@ -1,6 +1,12 @@
 .list {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   width: 50%;
   border-radius: 5px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem 0;
+  background-color: #fff;
+  position: absolute;
 }

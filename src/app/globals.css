@@ -83,6 +83,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-image: linear-gradient(#c4d9e6, #ffffff);
+  background-repeat: no-repeat;
 }
 
 /* body {

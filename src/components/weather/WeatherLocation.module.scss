@@ -1,0 +1,7 @@
+.weatherNowContainer {
+  margin: 1rem 10rem 0;
+  @media screen and (max-width: 800px) {
+    margin: 0 1rem;
+  }
+}
+

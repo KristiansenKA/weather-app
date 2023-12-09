@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import style from './List.module.scss';
+import style from './ListItem.module.scss';
 
 const ListItem = <T,>({ item, children, onClick}: ListItemProps<T>): ReactElement => {
   return (

@@ -1,0 +1,26 @@
+.currentWeatherCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  padding: 1rem 2.5rem;
+  background-color: #fff;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .weatherInformation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .item {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

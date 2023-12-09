@@ -1,24 +1,28 @@
 export type Weather = {
   latitude: number;
   longitude: number;
-  hourly: {
-    time: number;
+  hourly?: {
+    time: string;
     temperature: number;
     weatherCode: number;
-  }[],
-  daily: {
-    time: number;
+    rain: number;
+    windSpeed: number;
+  }[];
+  daily?: {
+    time: string;
     temperatureMax: number;
     temperatureMin: number;
-    weatherCodes: number;
-  }[],
-}
+    weatherCode: number;
+    rain: number;
+    windSpeed: number;
+  }[];
+};
 
 export type WeatherRequest = {
-  latitude: number[];
-  longitude: number[];
-  hourly: boolean;
-  daily: boolean;
+  latitude: string[];
+  longitude: string[];
+  hourly?: boolean;
+  daily?: boolean;
   foreCastLengthInDays: number;
 };
 
@@ -39,7 +43,7 @@ export enum WeatherType {
 export type WeatherResponse = {
   latitude: number;
   longitude: number;
-  generationtime_ms: number
+  generationtime_ms: number;
   utc_offset_seconds: number;
   timezone: string;
   timezone_abbreviation: string;
@@ -50,20 +54,26 @@ export type WeatherResponse = {
     weather_code: string;
   };
   hourly: {
-    time: number[];
+    time: string[];
     temperature_2m: number[];
     weather_code: number[];
+    wind_speed_10m: number[];
+    rain: number[];
   };
   daily_units: {
     time: string;
     weather_code: string;
     temperature_2m_max: string;
     temperature_2m_min: string;
+    wind_speed_10m_max: number;
+    rain_sum: number;
   };
   daily: {
-    time: number[];
+    time: string[];
     weather_code: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
+    wind_speed_10m_max: number[];
+    rain_sum: number[];
   };
 }[];

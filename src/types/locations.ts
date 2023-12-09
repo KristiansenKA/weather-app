@@ -26,5 +26,5 @@ export type Location = {
 };
 
 export type LocationsResponse = {
-  results: Location[];
+  results?: Location[];
 }

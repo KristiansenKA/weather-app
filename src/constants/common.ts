@@ -1,0 +1,1 @@
+export const API_PATH = process.env.NEXTJS_PUBLIC_API_PATH || 'http://localhost:3000';

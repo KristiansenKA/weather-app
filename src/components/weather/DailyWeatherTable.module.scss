@@ -1,0 +1,36 @@
+.weatherTableContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  .dailyWeatherTable {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    width: 100%;
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 45% 2rem;
+      grid-template-areas: "location days actions";
+      column-gap: 0.5rem;
+      border-bottom: 1px solid #c3d0d8;
+      padding: 0.5rem 1rem;
+
+      .days {
+        grid-area: days;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+        color: #666;
+      }
+    }
+  }
+}
