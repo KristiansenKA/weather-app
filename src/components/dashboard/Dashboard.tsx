@@ -45,7 +45,7 @@ const DashBoard = () => {
       (locationInLocalStorage) => locationInLocalStorage.id === location.id
     );
     if (!locationInLocalStorage) {
-      setLocalStorageData([...locationsInLocalStorage, location]);
+      setLocalStorageData([...(locationsInLocalStorage ?? []), location]);
     }
     const queryParams = new URLSearchParams({
       name: location.name,
@@ -56,17 +56,17 @@ const DashBoard = () => {
   };
 
   const handleOnDrag = (source: number, target: number) => {
-    const newLocations = [...locationsInLocalStorage];
+    const newLocations = [...(locationsInLocalStorage ?? [])];
     const [swapped] = newLocations.splice(source, 1);
     newLocations.splice(target, 0, swapped);
     setLocalStorageData(newLocations);
   };
 
   const handleOnDelete = (locationId: number) => {
-    const newLocations = locationsInLocalStorage.filter(
+    const newLocations = locationsInLocalStorage?.filter(
       (location) => location.id !== locationId
     );
-    setLocalStorageData(newLocations);
+    newLocations && setLocalStorageData(newLocations);
   };
 
   const openList = (locations.length > 0 || loading) && searchValue.length > 0;
